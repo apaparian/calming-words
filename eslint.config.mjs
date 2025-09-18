@@ -1,25 +1,61 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+/**
+ * THIS FILE WAS AUTO-GENERATED.
+ * PLEASE DO NOT EDIT IT MANUALLY.
+ * ===============================
+ * IF YOU'RE COPYING THIS INTO AN ESLINT CONFIG, REMOVE THIS COMMENT BLOCK.
+ */
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import path from 'node:path';
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import { includeIgnoreFile } from '@eslint/compat';
+import js from '@eslint/js';
+import { configs, plugins } from 'eslint-config-airbnb-extended';
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+const gitignorePath = path.resolve('.', '.gitignore');
+
+const jsConfig = [
+  // ESLint Recommended Rules
   {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-    ],
+    name: 'js/config',
+    ...js.configs.recommended,
   },
+  // Stylistic Plugin
+  plugins.stylistic,
+  // Import X Plugin
+  plugins.importX,
+  // Airbnb Base Recommended Config
+  ...configs.base.recommended,
 ];
 
-export default eslintConfig;
+const nextConfig = [
+  // React Plugin
+  plugins.react,
+  // React Hooks Plugin
+  plugins.reactHooks,
+  // React JSX A11y Plugin
+  plugins.reactA11y,
+  // Next Plugin
+  plugins.next,
+  // Airbnb Next Recommended Config
+  ...configs.next.recommended,
+];
+
+const typescriptConfig = [
+  // TypeScript ESLint Plugin
+  plugins.typescriptEslint,
+  // Airbnb Base TypeScript Config
+  ...configs.base.typescript,
+  // Airbnb Next TypeScript Config
+  ...configs.next.typescript,
+];
+
+export default [
+  // Ignore .gitignore files/folder in eslint
+  includeIgnoreFile(gitignorePath),
+  // Javascript Config
+  ...jsConfig,
+  // Next Config
+  ...nextConfig,
+  // TypeScript Config
+  ...typescriptConfig,
+];
