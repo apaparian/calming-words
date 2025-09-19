@@ -40,3 +40,31 @@ export async function POST(req: NextRequest) {
   });
   return NextResponse.json(data);
 }
+
+export async function PUT() {
+  const refreshToken = (await cookies()).get('spotify_refresh_token')?.value;
+
+  if (!refreshToken) {
+    return NextResponse.json({ error: 'No refresh token', status: 500 });
+  }
+  const res = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: clientId,
+    }),
+  });
+  if (!res.ok) {
+    return NextResponse.json({ error: 'Error updating token', status: res.status });
+  }
+  const data = await res.json();
+  (await cookies()).set('spotify_access_token', data.access_token, {
+    httpOnly: true, secure: true, path: '/', maxAge: 3600,
+  });
+  (await cookies()).set('spotify_refresh_token', data.refresh_token, {
+    httpOnly: true, secure: true, path: '/', maxAge: 3600,
+  });
+  return NextResponse.json({ success: true });
+}
