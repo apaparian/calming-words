@@ -4,6 +4,8 @@
 
 The app can be previewed on vercel:
 [https://calming-words.vercel.app](https://calming-words.vercel.app)
+The app can be previewed on vercel:
+[https://calming-words.vercel.app](https://calming-words.vercel.app)
 
 ## Getting Started
 
