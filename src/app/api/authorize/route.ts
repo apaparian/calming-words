@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 
-const redirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI || 'http://127.0.0.1:3000/callback';
-const clientId = '36cf962a2ef4476d859c6a6531bbe96f';
+const clientId = process.env.CLIENT_ID!;
+const redirectUri = process.env.REDIRECT_URI!;
 
 export async function GET() {
   const generateRandomString = (length: number) => {

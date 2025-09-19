@@ -1,6 +1,9 @@
 import { cookies } from 'next/headers';
 import { type NextRequest, NextResponse } from 'next/server';
 
+const clientId = process.env.CLIENT_ID!;
+const redirectUri = process.env.REDIRECT_URI!;
+
 export async function GET() {
   const token = (await cookies()).get('spotify_access_token')?.value;
   if (!token) {
@@ -10,9 +13,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const {
-    redirectUri, clientId, verifier, code,
-  } = await req.json();
+  const { verifier, code } = await req.json();
 
   const res = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',

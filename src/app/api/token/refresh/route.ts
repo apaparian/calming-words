@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-const clientId = '36cf962a2ef4476d859c6a6531bbe96f';
+const clientId = process.env.CLIENT_ID!;
 
 export async function POST() {
   const refreshToken = (await cookies()).get('spotify_refresh_token')?.value;

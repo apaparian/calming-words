@@ -14,10 +14,6 @@ import NowPlaying from '../components/NowPlaying';
 import ListContainer from './ListContainer';
 import Header from '../components/Header';
 
-const redirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI
-  || 'http://127.0.0.1:3000/callback';
-const clientId = '36cf962a2ef4476d859c6a6531bbe96f';
-
 function MainContainer() {
   const [wordList, setWordList] = useState<Word[]>([]);
   const [unusedWords, setUnusedWords] = useState<Word[]>([]);
@@ -82,9 +78,7 @@ function MainContainer() {
       if (e.data.type === 'SPOTIFY_AUTH_CODE') {
         const verifier = localStorage.getItem('spotify_pkce_verifier');
 
-        await axios.post('/api/token', {
-          redirectUri, clientId, verifier, code: e.data.code,
-        });
+        await axios.post('/api/token', { verifier, code: e.data.code });
 
         if (!playerRef.current && !document.getElementById('spotify-sdk')) {
           const script = document.createElement('script');
