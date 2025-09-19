@@ -108,7 +108,7 @@ function MainContainer() {
             playerRef.current = player;
           };
         }
-        refreshId = window.setInterval(() => axios.put('/api/token/'), 1 * 60 * 1000);
+        refreshId = window.setInterval(() => axios.put('/api/token/'), 55 * 60 * 1000);
       }
     };
     window.addEventListener('message', handleMessage);
