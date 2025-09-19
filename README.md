@@ -1,8 +1,9 @@
 *** Must create a .env.local file in the root folder with the following:
 - CLIENT_ID=(Your SpotifyAPI client ID)
-- REDIRECT_URI=http://127.0.0.1:(port-default=3000)/callback
+- REDIRECT_URI=http://127.0.0.1: (port-default=3000) /callback
 
-The app can be previewed on vercel: [https://calming-words.vercel.app(https://calming-words.vercel.app)
+The app can be previewed on vercel:
+[https://calming-words.vercel.app(https://calming-words.vercel.app)
 
 ## Getting Started
 
