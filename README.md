@@ -31,3 +31,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ---
 ºyou can ask for my credentials if I've asked you to view or test
+
+areas of concern:
+lines 77 - 114 in containers/MainContainer.tsx
+api/token/route.ts
+
+
