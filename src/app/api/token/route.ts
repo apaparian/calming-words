@@ -3,6 +3,10 @@ import { type NextRequest, NextResponse } from 'next/server';
 
 const clientId = process.env.CLIENT_ID!;
 const redirectUri = process.env.REDIRECT_URI!;
+const isProduction = process.env.NODE_ENV === 'production';
+
+const accessTokenExpiry = 3600;
+const refreshTokenAgeExpiry = 30 * 24 * 3600;
 
 export async function GET() {
   const token = (await cookies()).get('spotify_access_token')?.value;
@@ -33,11 +37,12 @@ export async function POST(req: NextRequest) {
   const data = await res.json();
 
   (await cookies()).set('spotify_access_token', data.access_token, {
-    httpOnly: true, secure: false, path: '/', maxAge: 3600,
+    httpOnly: true, secure: isProduction, path: '/', maxAge: accessTokenExpiry,
   });
   (await cookies()).set('spotify_refresh_token', data.refresh_token, {
-    httpOnly: true, secure: false, path: '/', maxAge: 3600,
+    httpOnly: true, secure: isProduction, path: '/', maxAge: refreshTokenAgeExpiry,
   });
+
   return NextResponse.json(data);
 }
 
@@ -60,11 +65,13 @@ export async function PUT() {
     return NextResponse.json({ error: 'Error updating token', status: res.status });
   }
   const data = await res.json();
+
   (await cookies()).set('spotify_access_token', data.access_token, {
-    httpOnly: true, secure: true, path: '/', maxAge: 3600,
+    httpOnly: true, secure: isProduction, path: '/', maxAge: accessTokenExpiry,
   });
   (await cookies()).set('spotify_refresh_token', data.refresh_token, {
-    httpOnly: true, secure: true, path: '/', maxAge: 3600,
+    httpOnly: true, secure: isProduction, path: '/', maxAge: refreshTokenAgeExpiry,
   });
+
   return NextResponse.json({ success: true });
 }
