@@ -30,21 +30,10 @@ function MainContainer() {
 
   const playerRef = useRef<Spotify.Player | null>(null);
 
-  const getIx = (list: Word[]) => Math.floor(Math.random() * list.length);
-
   const removeWord = (list: Word[], i: number) => list.slice(0, i).concat(list.slice(i + 1));
 
-  const getWord = (list: Word[]) => {
-    if (list.length === 1) {
-      setUnusedWords(wordList);
-      setCurrWord(list[0]);
-    } else {
-      let i = getIx(list);
-      while (list[i].word === currWord?.word) i = getIx(list);
-
-      setCurrWord(list[i]);
-      setUnusedWords(removeWord(list, i));
-    }
+  const deleteWord = (i: number) => {
+    setWordList(removeWord(wordList, i));
   };
 
   const addWord = (word: string) => {
@@ -53,8 +42,16 @@ function MainContainer() {
     }
   };
 
-  const deleteWord = (i: number) => {
-    setWordList(removeWord(wordList, i));
+  const getWord = (list: Word[]) => {
+    if (list.length === 1) {
+      setCurrWord(list[0]);
+      setUnusedWords(wordList);
+    } else {
+      const i = Math.floor(Math.random() * list.length);
+
+      setCurrWord(list[i]);
+      setUnusedWords(removeWord(list, i));
+    }
   };
 
   const linkTrackToWord = (track: Spotify.Track, i = currWordIndex) => {
