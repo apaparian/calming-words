@@ -127,7 +127,11 @@ function MainContainer() {
   useEffect(() => {
     if (deviceId && !playlistId) {
       axios.get('/api/playlists').then((res) => {
-        if (res.data) setPlaylistId(res.data.id);
+        if (res.data) {
+          setPlaylistId(res.data.playlistId);
+          console.log(res.data.wordList);
+          setWordList(res.data.wordList);
+        }
       });
     }
   }, [deviceId, playlistId]);

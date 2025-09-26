@@ -17,12 +17,12 @@ function CreatePlaylist({
   setPlaylistId,
 }: CreatePlaylistProps): JSX.Element {
   const createPlaylist = async () => {
-    const trackUris = wordList.map(({ track }) => track?.uri).filter((uri) => !!uri);
+    // const trackUris = wordList.map(({ track }) => track?.uri).filter((uri) => !!uri);
 
     if (playlistId) {
-      axios.post(`/api/playlists/${playlistId}`, { trackUris });
+      axios.put('/api/playlists/', { wordList, playlistId });
     } else {
-      const res = await axios.post('/api/playlists/create', { trackUris });
+      const res = await axios.post('/api/playlists/', { wordList });
       if (res.data.id) {
         setPlaylistId(res.data.id);
         setPlaylistCreated(true);
