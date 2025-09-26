@@ -61,7 +61,7 @@ function ListContainer({
           onClick={() => displayWords()}
           disabled={!wordList[0]}
         >
-          Save List
+          Item Display
         </Button>
       </CardActions>
     </Card>
