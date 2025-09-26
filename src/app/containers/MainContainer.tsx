@@ -129,7 +129,6 @@ function MainContainer() {
       axios.get('/api/playlists').then((res) => {
         if (res.data) {
           setPlaylistId(res.data.playlistId);
-          console.log(res.data.wordList);
           setWordList(res.data.wordList);
         }
       });
